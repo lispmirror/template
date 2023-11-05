@@ -1,0 +1,17 @@
+on: [push, workflow_dispatch]
+
+jobs:
+  ocicl_job:
+    permissions:
+      packages: write
+    runs-on: ubuntu-latest
+    name: Test and publish package
+    timeout-minutes: 20
+    steps:
+      - id: build-and-publish
+        uses: lispmirror/ocicl-action@main
+        with:
+          gpg_signing_key: ${{ secrets.GPG_SIGNING_KEY }}
+          gpg_public_key: ${{ secrets.GPG_PUBLIC_KEY }}
+          gpg_passphrase: ${{ secrets.GPG_PASSPHRASE }}
+          dockerhub_password: ${{ secrets.DOCKERHUB_PASSWORD }}
